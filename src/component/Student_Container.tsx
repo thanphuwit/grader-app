@@ -1,8 +1,11 @@
 import { Link, Outlet } from 'react-router-dom'
 import { useRef,useState,useEffect } from 'react'
+import { addStudent } from "../component/slice";
+import { useSelector, useDispatch } from 'react-redux'
 
 
-const Student_Container = ({pass_Data}) => {
+const Student_Container = () => {
+    const dispatch = useDispatch()
     
     const inputRef = useRef([])
 
@@ -76,7 +79,7 @@ const Student_Container = ({pass_Data}) => {
                 </div>
             </div>
 
-            <button className='border-2 bg-red-500'
+            <Link className='border-2 bg-red-500'
                 onClick={()=>{
                     let arr_obj = []
                     let arr = []
@@ -116,14 +119,17 @@ const Student_Container = ({pass_Data}) => {
                         }
 
                     })
+                    // dispatch(addStudent(arr_obj))
                     setStudent(arr_obj)
+                    dispatch(addStudent(arr_obj))
                 }}
+                to='/Result'
             >
-                ดึงค่าจากทุกref
-            </button>
-            <div>
+                หน้าถัดไป
+            </Link>
+            {/* <div>
                 <Link to='/Result'>หน้าถัดไป</Link>
-            </div>
+            </div> */}
             <br/>
 
             <h1>Render Count: {count1.current}</h1>

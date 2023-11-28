@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialValue = {
   courseId:'',
   courseName:'',
-  student:'',
+  student:[],
 };
 
 export const slice = createSlice({
@@ -18,8 +18,13 @@ export const slice = createSlice({
       // console.log(action.payload)
       // console.log(action.payload.courseName)
     },
+    addStudent: (state, action) => {
+      // console.log(action.payload)
+      state.student = action.payload
+      // console.log(state.student)
+    }
   },
 });
 
-export const { addCourse } = slice.actions;
+export const { addCourse,addStudent } = slice.actions;
 export default slice.reducer;

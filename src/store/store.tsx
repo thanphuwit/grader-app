@@ -3,7 +3,7 @@ import sliceReducer from '../component/slice'
 
 const store = configureStore({
   reducer: {
-    reducer: sliceReducer,
+    data: sliceReducer,
   },
 })
 

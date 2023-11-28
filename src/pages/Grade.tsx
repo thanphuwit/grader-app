@@ -6,7 +6,7 @@ import Student_Container from "../component/Student_Container";
 
 
 const Grade = () => {
-    // const data = useSelector((state) => state.data.value)
+    const data = useSelector((state) => state.data)
     // console.log(data)
 
 
