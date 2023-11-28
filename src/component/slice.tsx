@@ -6,11 +6,12 @@ const initialValue = {
   student:[],
 };
 
-export const slice = createSlice({
+export const Slice = createSlice({
   name: 'data',
   initialState: initialValue,
   reducers: {
     addCourse: (state, action) => {
+      // console.log(action.payload)
       state.courseId = action.payload.courseId;
       state.courseName = action.payload.courseName;
       // console.log(state.courseId)
@@ -26,5 +27,5 @@ export const slice = createSlice({
   },
 });
 
-export const { addCourse,addStudent } = slice.actions;
-export default slice.reducer;
+export const { addCourse,addStudent } = Slice.actions;
+export default Slice.reducer;

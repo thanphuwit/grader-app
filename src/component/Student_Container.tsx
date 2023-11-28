@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom'
 import { useRef,useState,useEffect } from 'react'
-import { addStudent } from "../component/slice";
+import { addStudent } from "../component/Slice";
 import { useSelector, useDispatch } from 'react-redux'
 
 

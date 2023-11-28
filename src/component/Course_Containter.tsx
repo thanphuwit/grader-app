@@ -1,16 +1,18 @@
 import { Link,Outlet } from 'react-router-dom'
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { addCourse } from './slice'
+import { addCourse } from './Slice'
+import { forwardRef } from 'react'
 
 const Course_Container = ({CourseHandle}) => {
-
-    const dispatch = useDispatch()
     const NameRef = useRef<HTMLInputElement>(null)
     const IdRef = useRef<HTMLInputElement>(null)
     return (
         <div>
-            <div>
+            <CourseIdCon ref={IdRef}/>
+            <CourseNameCon ref={NameRef}/>
+            <SubmitButton CourseHandle={CourseHandle} id={IdRef} name={NameRef}/>
+            {/* <div>
                 <h1>รหัสวิชา</h1>
                 <input ref={IdRef} className="border-2"></input>
             </div>
@@ -24,41 +26,45 @@ const Course_Container = ({CourseHandle}) => {
                     dispatch(addCourse({courseName:NameRef.current?.value,courseId:IdRef.current?.value}))
                 }}>ถัดไป</Link>
                 <Outlet/>
-            </div>
+            </div> */}
         </div>
     )
 }
 
-const CourseNameCon = () => {
+const CourseNameCon = forwardRef((props,ref) => {
     return (
         <div>
             <h1>รหัสวิชา</h1>
-            <input className="border-2"></input>
+            <input ref={ref} className="border-2"></input>
         </div>
     )
-}
+})
 
-const CourseIdCon = () => {
+const CourseIdCon = forwardRef((props,ref) => {
     return (
         <div>
             <h1>ชื่อวิชา</h1>
-            <input className="border-2"></input>
+            <input ref={ref} className="border-2"></input>
         </div>
     )
-}
+})
 
-const SubmitButton = ({CourseHandle,name,id}) => {
+const SubmitButton = ({CourseHandle,id,name}) => {
+    const dispatch = useDispatch()
     return (
         <div className="p-2 border-2 bg-red-100 w-24">
-            <button onClick={()=>{
-                CourseHandle(name,id)
-            }}>
-            ppp
-            </button>
-            {/* <Link to='/'>ถัดไป</Link>
-            <Outlet/> */}
-            <h1>x</h1>
+                <Link to='/Grade' onClick={()=>{
+                    CourseHandle(id,name)
+                    dispatch(addCourse({courseId:id.current.value,courseName:name.current.value}))
+                }}>ถัดไป</Link>
+                <Outlet/>
+                {/* <button onClick={()=>{
+                    console.log("id: "+id.current.value)
+                    console.log("name: "+name.current.value)}}>
+                    focus
+                </button> */}
         </div>
+        
     )
 }
 
