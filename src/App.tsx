@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom' 
 
 import Navbar from './component/Navbar'
+import Course from './pages/Course'
 import Grade from './pages/Grade'
-// import Grade from './pages/Grade'
-// import Result from './pages/Result'
+import Result from './pages/Result'
 
 function App() {
 
@@ -15,10 +15,10 @@ function App() {
       <BrowserRouter>
         <Navbar/>
           <Routes>
-              <Route path="/" element={<Grade/>}/>
+              <Route path="/" element={<Course/>}/>
+              <Route path="/Course" element={<Course/>}/>
               <Route path="/Grade" element={<Grade/>}/>
-              {/* <Route path="/Grade" element={<Grade/>}/>
-              <Route path="/Result" element={<Result/>}/>   */}
+              <Route path="/Result" element={<Result/>}/>  
           </Routes>
       </BrowserRouter>
     </>

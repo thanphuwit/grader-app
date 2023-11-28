@@ -1,10 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-import Student from '../component/Student'
+import Student_Container from "../component/Student_Container";
 
 
 const Grade = () => {
+    // const data = useSelector((state) => state.data.value)
+    // console.log(data)
+
 
     const count1 = useRef(0)
 
@@ -14,23 +18,14 @@ const Grade = () => {
 
     return (
         <div>
-            <h1>รหัสวิชา</h1>
-            <input className="border-2 border-black">
-            </input>
-            <h1>ชื่อวิชา</h1>
-            <input className="border-2 border-black">
-            </input>
-            <br/>
-            <button className="p-2 bg-blue-500"
-            >
-                เพิ่ม
-            </button>
-
-
             <div>
-                <Student />
+                <Student_Container/>
             </div>
-
+            <button onClick={()=>{
+                console.log(data)
+            }}>
+                sss
+            </button>
             <h1>Render Count: {count1.current}</h1>
         </div>
     )

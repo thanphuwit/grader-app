@@ -1,8 +1,8 @@
 import { Link, Outlet } from 'react-router-dom'
 import { useRef,useState,useEffect } from 'react'
-import Result from '../pages/Result'
 
-const Student = ({pass_Data}) => {
+
+const Student_Container = ({pass_Data}) => {
     
     const inputRef = useRef([])
 
@@ -14,25 +14,10 @@ const Student = ({pass_Data}) => {
     let no = 1
     let arr =[]
     Array(count).fill().map((item,index)=>{
-        // if(index%4!=3){
-        //     arr.push(<input
-        //         key={index} ref={(element) => (inputRef.current[index] = element)}
-        //         className='mx-2 '
-        //         />)
-        // }
-        // else{
-        //     arr.push(<input
-        //         key={index} ref={(element) => (inputRef.current[index] = element)}
-        //         className='mx-2 '
-        //         />)
-        //     components.push(
-        //         <div></div>
-        //     )
-        // }
             if(index%4==0){
                 if(no<10){
                     components.push(
-                        <h1 className='inline ml-2'>{no}.</h1>
+                        <h1 className='inline ml-2' >{no}.</h1>
                     )
                 }
                 else{
@@ -52,7 +37,7 @@ const Student = ({pass_Data}) => {
                     className='mx-2 inline'
                     />
                     )
-                    components.push(<h1 className='mx-2'></h1>)
+                    components.push(<h1 className='mx-2' ></h1>)
                 
             }else{
                 components.push(<input
@@ -137,12 +122,7 @@ const Student = ({pass_Data}) => {
                 ดึงค่าจากทุกref
             </button>
             <div>
-                <button onClick={()=>{
-                    pass_Data(student)
-                }}>
-                ส่งค่ากลับมา
-                </button>
-                {/* <Link to='/Grade/Result' state={{ fromStudent: {student}}}>หน้าถัดไป</Link> */}
+                <Link to='/Result'>หน้าถัดไป</Link>
             </div>
             <br/>
 
@@ -153,4 +133,4 @@ const Student = ({pass_Data}) => {
 
 }
 
-export default Student
+export default Student_Container
