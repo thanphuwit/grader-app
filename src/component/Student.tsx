@@ -1,39 +1,69 @@
 import InputData from './InputData'
 import { useRef,useState,useEffect } from 'react'
 
-const Student = (props) => {
+const Student = () => {
     
     const inputRef = useRef([])
+
     const [count,setCount] = useState<number>(0)
 
     const [student,setStudent] = useState<Object[]>([])
 
     let components = []
-    // props.data.map((record,index)=>{
-    //     components.push( 
-    //     <InputData
-    //     key={index}
-    //     ref={(element)=>{
-    //         refs.current[index] = element
-    //     }}
-    //     id={record.id} 
-    //     nisitId={record.nisitId} 
-    //     name={record.name} 
-    //     mid={record.mid} 
-    //     final={record.final}
-    //     /> )
-    // })
+    let no = 1
+    let arr =[]
     Array(count).fill().map((item,index)=>{
-        // console.log(inputRef.cur)
-        components.push(<input
-            key={index} ref={(element) => (inputRef.current[index] = element)}
-            
-            className='mx-2'
-            />)
+        // if(index%4!=3){
+        //     arr.push(<input
+        //         key={index} ref={(element) => (inputRef.current[index] = element)}
+        //         className='mx-2 '
+        //         />)
+        // }
+        // else{
+        //     arr.push(<input
+        //         key={index} ref={(element) => (inputRef.current[index] = element)}
+        //         className='mx-2 '
+        //         />)
+        //     components.push(
+        //         <div></div>
+        //     )
+        // }
+            if(index%4==0){
+                if(no<10){
+                    components.push(
+                        <h1 className='inline ml-2'>{no}.</h1>
+                    )
+                }
+                else{
+                    components.push(
+                        <h1 className='inline'>{no}.</h1>
+                    )
+                }
+                no = no+1
+                components.push(<input
+                    key={index} ref={(element) => (inputRef.current[index] = element)}
+                    className='mx-2 inline my-1'
+                    />)
+                    
+            }else if(index%4==3){
+                components.push(<input
+                    key={index} ref={(element) => (inputRef.current[index] = element)}
+                    className='mx-2 inline'
+                    />
+                    )
+                    components.push(<h1 className='mx-2'></h1>)
+                
+            }else{
+                components.push(<input
+                    key={index} ref={(element) => (inputRef.current[index] = element)}
+                    className='mx-2 inline '
+                    />
+                    )
+            }
     })
 
     const count1 = useRef(0)
-    useEffect(()=>{
+    useEffect(()=>{ 
         count1.current = count1.current + 1;
     })
 
@@ -54,8 +84,11 @@ const Student = (props) => {
             >
                 ดูค่าในobject
             </button>
-
-            {components}
+            <div className='flex justify-center items-center bg-red-500'>
+                <div className='justify-center items-center bg-green-500 p-2'>
+                    {components}
+                </div>
+            </div>
 
             <button className='border-2 bg-red-500'
                 onClick={()=>{
@@ -96,45 +129,30 @@ const Student = (props) => {
                             })
                         }
 
-                        
-                        // if(index%4!=3){
-                        //     obj.push(inputRef.current[index].value)
-                        // }
-                        // console.log(inputRef.current[index].value)
-                        // if(index%4==0){
-                        //     nisitId={nisitId:inputRef.current[index].value}
-                        //     console.log('nisit pass')
-                        // }
-                        // if(index%4==1){
-                        //     name={name:inputRef.current[index].value}
-                        //     console.log('name pass')
-                        // }
-                        // if(index%4==2){
-                        //     mid={mid:inputRef.current[index].value}
-                        //     console.log('mid pass')
-                        // }
-                        // if(index%4==3){
-                        //     final={final:inputRef.current[index].value}
-                        //     console.log('final pass')
-                        // }
-                        // // console.log(nisitId)
-                        // //     console.log(name)
-                        // //     console.log(mid)
-                        // //     console.log(final)
-                        // if(Object.keys(nisitId).length!=0 && Object.keys(name).length!=0 && Object.keys(mid).length!=0 && Object.keys(final).length!=0){
-                        //     console.log(nisitId)
-                        //     console.log(name)
-                        //     console.log(mid)
-                        //     console.log(final)
-                            
-                        //     obj.assign({nisitId,name,mid,final})
-                        // }
                     })
                     setStudent(arr_obj)
                 }}
             >
                 ดึงค่าจากทุกref
             </button>
+            <br/>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
+            <br/>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
+            <input className='border-2'>
+            </input>
             <h1>Render Count: {count1.current}</h1>
         </div>
     )
