@@ -1,13 +1,14 @@
 import React from 'react';
 import Student from './Student';
-import { current } from '@reduxjs/toolkit';
 
-const Page = ({ student, changeEach, currentPage}) => {
+const StudentPage = ({ student, changeEach, currentPage}) => {
     
   let components = []
   student.map((item)=>{
     if(item.page==currentPage){
-      components.push(<Student
+      components.push(
+      <Student
+        key={item.id}
         id={item.id}
         page={item.page}
         nisitId={item.nisitId}
@@ -16,7 +17,7 @@ const Page = ({ student, changeEach, currentPage}) => {
         mid={item.mid}
         final={item.final}
         changeEach={changeEach}
-        />)
+      />)
     }
   })
 
@@ -25,4 +26,4 @@ const Page = ({ student, changeEach, currentPage}) => {
   );
 };
 
-export default Page
+export default StudentPage

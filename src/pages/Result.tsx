@@ -10,7 +10,7 @@ const Result = () => {
 
     const data = useSelector((state) => state.data)
 
-    console.log(data)
+    // console.log(data)
     // data = {
     //     "courseId": "1",
     //     "courseName": "2",

@@ -1,3 +1,9 @@
+import { useState } from 'react'
+
+import Result from "./Result"
+import ResultPage from "./ResultPage"
+import Pagination from './Pagination'
+
 const Result_Container = ({student}) => {
     // console.log(student)
     // student = {
@@ -11,6 +17,7 @@ const Result_Container = ({student}) => {
     //     "sum": 0,
     //     "grade": 0
     // }
+
     
     // let courseName = data.courseName
     // let courseId = data.courseId
@@ -18,66 +25,65 @@ const Result_Container = ({student}) => {
     // console.log(data)
 
     let components = []
-    student.map((item,index)=>{
-        // console.log(item)
-        components.push(
-            <div className="flex flex-row bg-green-200 items-center w-2/3    justify-around border-2">
-                <div className="border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.id}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.nisitId}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.firstname}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.lastname}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.mid}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.final}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.sum}</h1>
-                </div>
-                <div className=" border-black w-1/8 flex items-center justify-center">
-                    <h1>{item.grade}</h1>
-                </div>
-            </div>
-        )
-    })
+    // student.map((item,index)=>{
+    //     // console.log(item)
+    //     components.push(
+    //         <Result/>
+    //         // <tr className="">
+    //         //     <td className="border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.id}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.nisitId}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.firstname}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.lastname}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.mid}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.final}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.sum}</h1>
+    //         //     </td>
+    //         //     <td className=" border-black w-1/8 flex items-center justify-center">
+    //         //         <h1>{item.grade}</h1>
+    //         //     </td>
+    //         // </tr>
+    //     )
+    // })
 
-    
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePage = (newPage) => {
+        setCurrentPage(newPage)
+    }
+
     return (
-        <div className="flex flex-row justify-center items-center w-screen">
-            <div className="flex flex-col bg-gray-500 w-screen justify-center items-center">
-                <div className="flex flex-row bg-green-200 items-center w-2/3    justify-around border-2">
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>ลำดับ</p>
-                    </div>
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>ชื่อ</p>
-                    </div>
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>นามสกุล</p>
-                    </div>
-                    <div className="border-black w-1/8 flex items-center justify-center">
-                        <p>คะแนนกลางภาค</p>
-                    </div>
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>คะแนนปลายภาค</p>
-                    </div>
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>คะแนนรวม</p>
-                    </div>
-                    <div className=" border-black w-1/8 flex items-center justify-center">
-                        <p>เกรด</p>
-                    </div>
-                </div>
-                {components}
+        <div className="justify-center items-center bg-gray-400">
+            <div className='py-3'>
+                <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
+            </div>
+            <div className='flex justify-center items-center w-screen py-5 bg-blue-200'>
+                <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
+                     <tbody>
+                        <tr className=''>
+                            <td className='border-2 rounded-md text-center w-1/12'>ลำดับ</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>รหัสนิสิต</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>ชื่อ</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>นามสกุล</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>กลางภาค</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>ปลายภาค</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>รวม</td>
+                            <td className='border-2 rounded-md text-center w-1/12'>เกรด</td>
+                        </tr>
+                        <ResultPage student={student} currentPage={currentPage}/>
+                    </tbody>
+                </table>
             </div>
         </div>
     )

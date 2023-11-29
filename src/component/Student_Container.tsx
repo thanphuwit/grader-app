@@ -4,8 +4,9 @@ import { addStudent } from "./Slice";
 import { useSelector, useDispatch } from 'react-redux'
 import Student from './Student';
 import Pagination from './Pagination';
-import Page from './Page';
+import Page from './StudentPage';
 import { current } from '@reduxjs/toolkit';
+import StudentPage from './StudentPage';
 
 const Student_Container = ({student,changeEachRecord}) => {
     // console.log(student)
@@ -71,40 +72,40 @@ const Student_Container = ({student,changeEachRecord}) => {
         changeEachRecord(nisitId,firstname,lastname,mid,final,id)
     }
 
-    student.map((record,index)=>{
-        components.push(
-            <Student
-                id= {record.id}
-                pageNumber={record.pageNumber}
-                nisitId={record.nisitId}
-                firstname={record.firstname}
-                lastname={record.lastname}
-                mid={record.mid}
-                final={record.final}
-                changeEach={changeEach}
-            />
-        )
-    })
+    // student.map((record,index)=>{
+    //     components.push(
+    //         <Student
+    //             id= {record.id}
+    //             pageNumber={record.pageNumber}
+    //             nisitId={record.nisitId}
+    //             firstname={record.firstname}
+    //             lastname={record.lastname}
+    //             mid={record.mid}
+    //             final={record.final}
+    //             changeEach={changeEach}
+    //         />
+    //     )
+    // })
 
     const [currentPage, setCurrentPage] = useState(1);
     const handlePage = (newPage) => {
         setCurrentPage(newPage)
     }
-    const [postsPerPage] = useState(10);
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = student.slice(indexOfFirstPost, indexOfLastPost);
+    // const [studentPerPage] = useState(10);
 
     // const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className='bg-gray-500 p-3'>
             <AddStudentButton changeEach={changeEach} />
-            <div className='flex justify-center items-center w-screen pb-5'>
+            <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
+            <div className='flex justify-center items-center w-screen py-5'>
                 <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
-                    <Title/>
-                    <Page student={student} changeEach={changeEach} currentPage={currentPage}/>
+                    <tbody>
+                        <Title/>
+                        <StudentPage student={student} changeEach={changeEach} currentPage={currentPage}/>
+                    </tbody>
                 </table>
             </div>
             {/* <button onClick={()=>{
@@ -117,7 +118,6 @@ const Student_Container = ({student,changeEachRecord}) => {
             }}>
                 xxxx
             </button> */}
-            <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
             <GoResultPageButton student={student} />
             <Outlet/>
         </div>
@@ -173,7 +173,7 @@ const Title = () => {
 const GoResultPageButton = ({student}) => {
     const dispatch = useDispatch()
     return (
-        <div>
+        <div className='bg-blue-500'>
             <Link to='/Result'
                 onClick={()=>{
                     dispatch(addStudent(student))

@@ -12,8 +12,6 @@ const DATA_INIT = [
     lastname:'',
     mid:0,
     final:0,
-    sum:0,
-    grade:'',
     },
   ]
 
@@ -33,10 +31,10 @@ const Grade = () => {
                 return object.id
             })
             const lastId = Math.max(...ids)+1
+            // set total student per page at below 
             const pageNumber = Math.floor((lastId-1)/10)+1
             setStudent(student => {
-                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'', mid:0, final:0,
-            sum:0,grade:''}]
+                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'', mid:0, final:0}]
             })
         }
         //change nisitId

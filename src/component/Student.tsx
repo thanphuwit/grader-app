@@ -22,46 +22,56 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
             <td className=''>
                 <input placeholder='รหัสนิสิต'
                 className='rounded text-center w-full'
+                value={nisitId}
                 onChange={(e)=>{
                     changeEach(e.target.value,null,null,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
             <td>
                 <input placeholder='ชื่อ'
                 className='rounded text-center w-full'
+                value={firstname}
                 onChange={(e)=>{
                     changeEach(null,e.target.value,null,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
             <td>
                 <input placeholder='นามสกุล'
                 className='rounded text-center w-full'
+                value={lastname}
                 onChange={(e)=>{
                     changeEach(null,null,e.target.value,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
             <td >
                 <input placeholder=''
                 className='rounded text-center w-full'
+                value={mid}
                 onChange={(e)=>{
                     changeEach(null,null,null,e.target.value,null,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
             <td>
                 <input placeholder=''
                 className='rounded text-center w-full'
+                value={final}
                 onChange={(e)=>{
                     changeEach(null,null,null,null,e.target.value,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
 
