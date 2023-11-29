@@ -87,39 +87,38 @@ const Student_Container = ({student,changeEachRecord}) => {
     })
 
     const [currentPage, setCurrentPage] = useState(1);
+    const handlePage = (newPage) => {
+        setCurrentPage(newPage)
+    }
     const [postsPerPage] = useState(10);
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = student.slice(indexOfFirstPost, indexOfLastPost);
 
-    const paginate = pageNumber => setCurrentPage(pageNumber);
+    // const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className='bg-gray-500 p-3'>
             <AddStudentButton changeEach={changeEach} />
-            <div className='flex justify-center items-center w-screen'>
+            <div className='flex justify-center items-center w-screen pb-5'>
                 <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
                     <Title/>
-                    <Page student={student} changeEach={changeEach}/>
+                    <Page student={student} changeEach={changeEach} currentPage={currentPage}/>
                 </table>
             </div>
-            <button onClick={()=>{
-                console.log('currentPage: '+currentPage)
-                console.log('indexOfLastPost: '+indexOfLastPost)
-                console.log('indexOfFirstPost: '+indexOfFirstPost)
-                console.log('currentPosts: '+currentPosts)
+            {/* <button onClick={()=>{
+                setCurrentPage(2)
+                // console.log('currentPage: '+currentPage)
+                // console.log('indexOfLastPost: '+indexOfLastPost)
+                // console.log('indexOfFirstPost: '+indexOfFirstPost)
+                // console.log('currentPosts: '+currentPosts)
                 
             }}>
                 xxxx
-            </button>
-
-            <NextPageButton student={student} />
-            <Pagination
-                postsPerPage={postsPerPage}
-                totalPosts={student.length}
-                paginate={paginate}
-            />
+            </button> */}
+            <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
+            <GoResultPageButton student={student} />
             <Outlet/>
         </div>
     )
@@ -171,7 +170,7 @@ const Title = () => {
     )
 }
 
-const NextPageButton = ({student}) => {
+const GoResultPageButton = ({student}) => {
     const dispatch = useDispatch()
     return (
         <div>

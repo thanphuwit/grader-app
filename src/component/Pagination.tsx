@@ -1,25 +1,41 @@
 import React from 'react';
 
-const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-  const pageNumbers = [];
+const Pagination = ({student,currentPage,handlePage}) => {
 
-  for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  let components = []
+  let totalPage = Math.ceil(student.length/10)
+  // console.log(totalPage)
+  Array(totalPage).fill().map((item,index)=>{
+    components.push(
+      <NumberPageButton pageNumber={index+1} currentPage={currentPage} handlePage={handlePage}/>
+    )
+  })
 
   return (
-    <nav>
-      <ul className='pagination'>
-        {pageNumbers.map(number => (
-          <li key={number} className='page-item'>
-            <a onClick={() => paginate(number)} href='!#' className='page-link'>
-              {number}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className=' w-full h-10 flex justify-center '>
+      <div className=' w-1/4 h-full flex justify-center '>
+        {components}
+      </div>
+    </div>
   );
-};
+}
+
+const NumberPageButton = ({pageNumber,currentPage,handlePage}) => {
+  let style = ''
+  if(currentPage==pageNumber){
+    style='flex justify-center items-center border-2 px-4 mx-1 rounded-lg hover:bg-yellow-500 font-bold text-white bg-red-400'
+  }else{
+    style='flex justify-center items-center border-2 px-4 mx-1 rounded-lg hover:bg-yellow-500 font-bold text-white'
+  }
+  return (
+    <button className={style}
+      onClick={()=>{
+        handlePage(pageNumber)
+      }}
+    >
+        {pageNumber}
+    </button>
+  )
+}
 
 export default Pagination;
