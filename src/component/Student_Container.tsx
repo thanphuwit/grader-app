@@ -1,21 +1,37 @@
 import { Link, Outlet } from 'react-router-dom'
 import { useRef,useState,useEffect, forwardRef } from 'react'
-import { addStudent } from "../component/Slice";
+import { addStudent } from "./Slice";
 import { useSelector, useDispatch } from 'react-redux'
 import Student from './Student';
+import Pagination from './Pagination';
+import Page from './Page';
+import { current } from '@reduxjs/toolkit';
 
-const Student_Container = ({data,changeEachRecord}) => {
-    const dispatch = useDispatch()
+const Student_Container = ({student,changeEachRecord}) => {
+    // console.log(student)
+    // student = [
+    //     {
+    //         "id": 1,
+    //         "page": 1,
+    //         "nisitId": "",
+    //         "firstname": "",
+    //         "lastname": "",
+    //         "mid": 0,
+    //         "final": 0,
+    //         "sum": 0,
+    //         "grade": ''
+    //     }
+    // ]
     
-    const inputRef = useRef([])
+    // const inputRef = useRef([])
 
-    const [count,setCount] = useState<number>(0)
+    // const [count,setCount] = useState<number>(0)
 
-    const [student,setStudent] = useState<Object[]>([])
+    // const [student,setStudent] = useState<Object[]>([])
 
     let components = []
-    let no = 1
-    let arr =[]
+    // let no = 1
+    // let arr =[]
     // Array(count).fill().map((item,index)=>{
     //         if(index%4==0){
     //             if(no<10){
@@ -50,68 +66,120 @@ const Student_Container = ({data,changeEachRecord}) => {
     //                 )
     //         }
     // })
-
-    const changeEach = (name,mid,final,id=null) =>{
-        changeEachRecord(name,mid,final,id)
+    // const c = changeEachRecord()
+    const changeEach = (nisitId,firstname,lastname,mid,final,id=null) =>{
+        changeEachRecord(nisitId,firstname,lastname,mid,final,id)
     }
 
-    data.map((record,index)=>{
+    student.map((record,index)=>{
         components.push(
             <Student
-                id={record.id}
+                id= {record.id}
                 pageNumber={record.pageNumber}
-                name={record.name}
+                nisitId={record.nisitId}
+                firstname={record.firstname}
+                lastname={record.lastname}
                 mid={record.mid}
                 final={record.final}
-                changeEach={changeEachRecord}
+                changeEach={changeEach}
             />
         )
     })
 
-    const handleStudent = ({student}) => {
-        setStudent(student)
-    }
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = student.slice(indexOfFirstPost, indexOfLastPost);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className='bg-gray-500 p-3'>
-            <button className='border-2 bg-red-500'
-                onClick={()=>{
-                    // let newCount = count+4
-                    // setCount(newCount)
-                    changeEach(null,null,null,null)
-                }}
-            >
-                เพิ่ม
-            </button>
-            <button className='border-2 bg-red-500'
-                onClick={()=>{
-                    console.log(student)
-                }}
-            >
-                ดูค่าในobject
-            </button>
-            <div className='flex justify-center items-center bg-red-500'>
-                <div className='justify-center items-center bg-green-500 p-2'>
-                    {components}
-                </div>
+            <AddStudentButton changeEach={changeEach} />
+            <div className='flex justify-center items-center w-screen'>
+                <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
+                    <Title/>
+                    <Page student={student} changeEach={changeEach}/>
+                </table>
             </div>
+            <button onClick={()=>{
+                console.log('currentPage: '+currentPage)
+                console.log('indexOfLastPost: '+indexOfLastPost)
+                console.log('indexOfFirstPost: '+indexOfFirstPost)
+                console.log('currentPosts: '+currentPosts)
+                
+            }}>
+                xxxx
+            </button>
 
-            <NextPageButton handleStudent={handleStudent} count={count} ref={inputRef}/>
-            {/* <div>
-                <Link to='/Result'>หน้าถัดไป</Link>
-            </div> */}
-            <br/>
+            <NextPageButton student={student} />
+            <Pagination
+                postsPerPage={postsPerPage}
+                totalPosts={student.length}
+                paginate={paginate}
+            />
             <Outlet/>
         </div>
     )
 
 }
 
-const NextPageButton = forwardRef((props,handleStudent,count,ref) => {
+const AddStudentButton = ({changeEach}) => {
+    return (
+            <button className='border-2 bg-red-500'
+                onClick={()=>{
+                    changeEach(null,null,null,null,null)
+                }}
+            >
+                เพิ่ม
+            </button>
+    )
+}
+
+const Title = () => {
+    return (
+            <tr className=''>
+                <td className='border-2 rounded-md text-center w-1/12'>ลำดับ</td>
+                <td className='border-2 rounded-md text-center w-1/6'>รหัสนิสิต</td>
+                <td className='border-2 rounded-md text-center w-1/6'>ชื่อ</td>
+                <td className='border-2 rounded-md text-center w-1/6'>นามสกุล</td>
+                <td className='border-2 rounded-md text-center w-1/12'>คะแนนกลางภาค</td>
+                <td className='border-2 rounded-md text-center w-1/12'>คะแนนปลายภาค</td>
+            </tr>
+        // <div className='flex bg-blue-500 justify-center items-center py-1'>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">ลำดับ</h1>
+        //     </div>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">รหัสนิสิต</h1>
+        //     </div>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">ชื่อ</h1>
+        //     </div>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">นามสกุล</h1>
+        //     </div>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">คะแนนกลางภาค</h1>
+        //     </div>
+        //     <div className="w-1/5 flex items-center justify-center">
+        //         <h1 className="mx-2">คะแนนปลายภาค</h1>
+        //     </div>
+        // </div>
+    )
+}
+
+const NextPageButton = ({student}) => {
     const dispatch = useDispatch()
     return (
         <div>
-
+            <Link to='/Result'
+                onClick={()=>{
+                    dispatch(addStudent(student))
+                }}
+            >หน้าถัดไป</Link>
         </div>
         // <Link className='border-2 bg-red-500'
         //         onClick={()=>{
@@ -162,6 +230,6 @@ const NextPageButton = forwardRef((props,handleStudent,count,ref) => {
         //         หน้าถัดไป
         //     </Link>
     )
-})
+}
 
 export default Student_Container
