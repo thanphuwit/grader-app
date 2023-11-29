@@ -4,7 +4,6 @@ const Result_Container = ({data}) => {
     let student = data.student
 
 
-
     let components = []
     student.map((item,index)=>{
         // console.log(item)
@@ -28,7 +27,7 @@ const Result_Container = ({data}) => {
             </div>
         )
     })
-    console.log(data)
+    // console.log(data)
     
     return (
         <div className="flex flex-row justify-center items-center w-screen">
@@ -45,6 +44,9 @@ const Result_Container = ({data}) => {
                     </div>
                     <div className="border-2 border-black w-1/5 flex items-center justify-center">
                         <p>คะแนนปลายภาค</p>
+                    </div>
+                    <div className="border-2 border-black w-1/5 flex items-center justify-center">
+                        <p>รวม</p>
                     </div>
                     <div className="border-2 border-black w-1/5 flex items-center justify-center">
                         <p>เกรด</p>
