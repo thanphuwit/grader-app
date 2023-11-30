@@ -4,20 +4,35 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import Student_Container from "../component/Student_Container";
 
-const DATA_INIT = [
+const DATA_INIT: {
+    id:number,
+    page:number,
+    nisitId:string,
+    firstname:string,
+    lastname:string,
+    work:number,
+    mid:number,
+    final:number,
+    grade:string,
+ }[] = 
+ [
     {id:1,
     page:1,
     nisitId:'',
     firstname:'',
     lastname:'',
-    mid:'',
-    final:'',
+    work:0,
+    mid:0,
+    final:0,
+    grade:'',
     },
   ]
 
 const Grade = () => {
 
-    const data = useSelector((state) => state.data)
+    const data: {courseId:string,coruseName:string,
+        student:{id:number,page:number,nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,grade:string}[]
+    } = useSelector((state) => state.data)
     // console.log(data)
     // data = {courseId: '1', courseName: '2', student: Array(0)}
     // const fromEdit = () => {
@@ -27,9 +42,37 @@ const Grade = () => {
     //         return data.student
     //     }
     // }
+
+    const calGrade = (work,mid,final) => {
+        let total = work+mid+final
+        if(total>=80){
+            return 'A'
+        }
+        else if(total>=75){
+            return 'B+'
+        }
+        else if(total>=70){
+            return 'B'
+        }
+        else if(total>=65){
+            return 'C+'
+        }
+        else if(total>=60){
+            return 'C'
+        }else if(total>=55){
+            return 'D+'
+        }
+        else if(total>=50){
+            return 'D'
+        }
+        else if(total<=49){
+            return 'F'
+        }
+    }
+
     const fromWhere = () => {
         if(data.student.length>1){
-            let obj = data.student
+            let obj = [...data.student]
             return obj
         }
         else{
@@ -39,10 +82,10 @@ const Grade = () => {
 
     const [student,setStudent] = useState(fromWhere)
 
-    const changeEachRecord = (nisitId,firstname,lastname,mid,final,id) => {
+    const changeEachRecord = (nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,id:number) => {
 
-        //new student
-        if((nisitId==null)&&(firstname==null)&&(lastname==null)&&(mid==null)&&(final==null)){
+        //new student.
+        if((nisitId==null)&&(firstname==null)&&(lastname==null)&&(work==null)&&(mid==null)&&(final==null)){
             const ids = student.map(object => {
                 return object.id
             })
@@ -50,7 +93,7 @@ const Grade = () => {
             // set total student per page at below 
             const pageNumber = Math.floor((lastId-1)/10)+1
             setStudent(student => {
-                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'', mid:'', final:''}]
+                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'',work:0, mid:0, final:0, grade:''}]
             })
         }
         //change nisitId
@@ -58,7 +101,7 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    (element as any).nisitId = nisitId
+                    element.nisitId = nisitId
                     return element
                 }
             })
@@ -69,10 +112,11 @@ const Grade = () => {
             // console.log(name)
             // console.log(student)
             let newStudent = [...student]
+            // console.log(newStudent  )
             newStudent.find((element)=>{
-                console.log(element)
+                // console.log(element)
                 if(element.id==id){
-                    (element.firstname as any) = firstname
+                    element.firstname = firstname
                     return element
                 }
             })
@@ -86,11 +130,24 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    (element.lastname as any) = lastname
+                    element.lastname = lastname
                     return element
                 }
             })
             // console.log(newStudent)
+            setStudent(newStudent)
+        }
+        //change work
+        else if(work!=null){
+            let newStudent = [...student]
+            newStudent.find((element)=>{
+                console.log(element)
+                if(element.id==id){
+                    element.work = work
+                    element.grade = calGrade(work, element.mid, element.final)
+                    return element
+                }
+            })
             setStudent(newStudent)
         }
         //change mid
@@ -98,7 +155,8 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    (element.mid as any) = mid
+                    element.mid = mid
+                    element.grade = calGrade(element.work, mid, element.final)
                     return element
                 }
             })
@@ -109,7 +167,8 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    (element.final as number) = final
+                    element.final = final
+                    element.grade = calGrade(element.work, element.mid, final)
                     return element
                 }
             })

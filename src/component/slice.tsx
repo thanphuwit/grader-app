@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialValue = {
+const initialValue: {courseId:string,courseName:string,
+  student:{id:number,page:number,nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,grade:string}[]}= {
   courseId:'',
   courseName:'',
   student:[],
@@ -19,7 +20,7 @@ export const Slice = createSlice({
       // console.log(action.payload)
       // console.log(action.payload.courseName)
     },
-    addStudent: (state, action) => {
+    addStudent: (state, action:{payload:{id:number,page:number,nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,grade:string}[],type:string}) => {
       // console.log(action.payload)
       state.student = action.payload
       // console.log(state.student)

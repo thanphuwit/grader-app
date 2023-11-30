@@ -14,6 +14,7 @@ const StudentPage = ({ student, changeEach, currentPage}) => {
         nisitId={item.nisitId}
         firstname={item.firstname}
         lastname={item.lastname}
+        work={item.work}
         mid={item.mid}
         final={item.final}
         changeEach={changeEach}

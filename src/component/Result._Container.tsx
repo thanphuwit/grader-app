@@ -63,6 +63,32 @@ const Result_Container = ({student}) => {
     const handlePage = (newPage) => {
         setCurrentPage(newPage)
     }
+    
+    let gpa:number = 0
+    let totalStudent = student.length
+    const getNumOfGrade = (grade:string) => {
+        if(grade=='A'){
+            return 4
+        }else if(grade=='B+'){
+            return 3.5
+        }else if(grade=='B'){
+            return 3
+        }else if(grade=='C+'){
+            return 2.5
+        }else if(grade=='C'){
+            return 2
+        }else if(grade=='D+'){
+            return 1.5
+        }else if(grade=='D'){
+            return 1
+        }else if(grade=='F'){
+            return 0
+        }
+    }
+
+    student.map((item)=>{
+        gpa = getNumOfGrade(item.grade) + gpa
+    })
 
     return (
         <div className="justify-center items-center bg-gray-400">
@@ -77,6 +103,7 @@ const Result_Container = ({student}) => {
                             <td className='border-2 rounded-md text-center w-1/6'>รหัสนิสิต</td>
                             <td className='border-2 rounded-md text-center w-1/6'>ชื่อ</td>
                             <td className='border-2 rounded-md text-center w-1/6'>นามสกุล</td>
+                            <td className='border-2 rounded-md text-center w-1/6'>คะแนนเก็บ</td>
                             <td className='border-2 rounded-md text-center w-1/12'>กลางภาค</td>
                             <td className='border-2 rounded-md text-center w-1/12'>ปลายภาค</td>
                             <td className='border-2 rounded-md text-center w-1/12'>รวม</td>
@@ -85,6 +112,9 @@ const Result_Container = ({student}) => {
                         <ResultPage student={student} currentPage={currentPage}/>
                     </tbody>
                 </table>
+            </div>
+            <div className='flex flex-row justify-center'>
+                <h1>GPA: {gpa/totalStudent}</h1>
             </div>
         </div>
     )

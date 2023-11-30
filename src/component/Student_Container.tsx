@@ -68,8 +68,8 @@ const Student_Container = ({student,changeEachRecord}) => {
     //         }
     // })
     // const c = changeEachRecord()
-    const changeEach = (nisitId,firstname,lastname,mid,final,id=null) =>{
-        changeEachRecord(nisitId,firstname,lastname,mid,final,id)
+    const changeEach = (nisitId,firstname,lastname,work,mid,final,id=null) =>{
+        changeEachRecord(nisitId,firstname,lastname,work,mid,final,id)
     }
 
     // student.map((record,index)=>{
@@ -109,7 +109,7 @@ const Student_Container = ({student,changeEachRecord}) => {
             <AddStudentButton changeEach={changeEach} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage} />
             <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
             <div className='flex justify-center items-center w-screen py-5'>
-                <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
+                <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-5/6'>
                     <tbody>
                         <Title/>
                         <StudentPage student={student} changeEach={changeEach} currentPage={currentPage}/>
@@ -137,7 +137,7 @@ const AddStudentButton = ({changeEach,currentPage,totalPage,handlePage}) => {
     return (
             <button className='border-2 bg-red-500'
                 onClick={()=>{
-                    changeEach(null,null,null,null,null)
+                    changeEach(null,null,null,null,null,null)
                 }}
             >
                 เพิ่ม
@@ -152,6 +152,7 @@ const Title = () => {
                 <td className='border-2 rounded-md text-center w-1/6'>รหัสนิสิต</td>
                 <td className='border-2 rounded-md text-center w-1/6'>ชื่อ</td>
                 <td className='border-2 rounded-md text-center w-1/6'>นามสกุล</td>
+                <td className='border-2 rounded-md text-center w-1/12'>คะแนนเก็บ</td>
                 <td className='border-2 rounded-md text-center w-1/12'>คะแนนกลางภาค</td>
                 <td className='border-2 rounded-md text-center w-1/12'>คะแนนปลายภาค</td>
             </tr>
@@ -184,6 +185,7 @@ const GoResultPageButton = ({student}) => {
         <div className='bg-blue-500'>
             <Link to='/Result'
                 onClick={()=>{
+                    // console.log(student)
                     dispatch(addStudent(student))
                 }}
             >หน้าถัดไป</Link>

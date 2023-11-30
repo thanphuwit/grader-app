@@ -1,4 +1,4 @@
-const Result = ({id,nisitId,firstname,lastname,mid,final}) => {
+const Result = ({id,nisitId,firstname,lastname,work,mid,final,grade}) => {
 
     const calGrade = (mid,final) => {
         let total = mid+final
@@ -42,16 +42,19 @@ const Result = ({id,nisitId,firstname,lastname,mid,final}) => {
                     <h1>{lastname}</h1>
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
+                    <h1>{work}</h1>
+                </td>
+                <td className='text-center rounded-md border-2 bg-white'>
                     <h1>{mid}</h1>
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
                     <h1>{final}</h1>
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
-                    <h1>{mid+final}</h1>
+                    <h1>{work+mid+final}</h1>
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
-                    <h1>{calGrade(mid,final)}</h1>
+                    <h1>{grade}</h1>
                 </td>
             </tr>
     )

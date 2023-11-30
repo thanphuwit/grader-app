@@ -1,7 +1,7 @@
 import Result from "./Result"
 
 const ResultPage = ({student,currentPage}) => {
-
+    
     let components = []
     student.map((item)=>{
         if(item.page==currentPage){
@@ -13,8 +13,10 @@ const ResultPage = ({student,currentPage}) => {
                 nisitId={item.nisitId}
                 firstname={item.firstname}
                 lastname={item.lastname}
+                work={item.work}
                 mid={item.mid}
                 final={item.final}
+                grade={item.grade}
                 />
             )
         }
