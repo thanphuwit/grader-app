@@ -59,6 +59,7 @@ const Result_Container = ({student}) => {
     // })
 
     const [currentPage, setCurrentPage] = useState(1);
+    let totalPage = Math.ceil(student.length/10)
     const handlePage = (newPage) => {
         setCurrentPage(newPage)
     }
@@ -66,16 +67,16 @@ const Result_Container = ({student}) => {
     return (
         <div className="justify-center items-center bg-gray-400">
             <div className='py-3'>
-                <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
+                <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
             </div>
             <div className='flex justify-center items-center w-screen py-5 bg-blue-200'>
                 <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
                      <tbody>
                         <tr className=''>
                             <td className='border-2 rounded-md text-center w-1/12'>ลำดับ</td>
-                            <td className='border-2 rounded-md text-center w-1/12'>รหัสนิสิต</td>
-                            <td className='border-2 rounded-md text-center w-1/12'>ชื่อ</td>
-                            <td className='border-2 rounded-md text-center w-1/12'>นามสกุล</td>
+                            <td className='border-2 rounded-md text-center w-1/6'>รหัสนิสิต</td>
+                            <td className='border-2 rounded-md text-center w-1/6'>ชื่อ</td>
+                            <td className='border-2 rounded-md text-center w-1/6'>นามสกุล</td>
                             <td className='border-2 rounded-md text-center w-1/12'>กลางภาค</td>
                             <td className='border-2 rounded-md text-center w-1/12'>ปลายภาค</td>
                             <td className='border-2 rounded-md text-center w-1/12'>รวม</td>

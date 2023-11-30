@@ -4,17 +4,6 @@ import Result from '../pages/Result'
 
 const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
     return (
-        // <tr>
-        //     <td className='jusitify-center flex w-1/5 '><h1>{id}</h1></td>
-        //     <td><input placeholder='รหัสนิสิต'
-        //         className='rounded text-center'
-        //         onChange={(e)=>{
-        //             changeEach(e.target.value,null,null,null,null,id)
-        //             // console.log(e.target.value)
-        //         }}
-        //         ></input></td>
-        //     <td>2</td>
-        // </tr>
         <tr className=''>
             <td className='flex justify-center'>
                 <h1>{id}</h1>
@@ -27,7 +16,6 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
                     changeEach(e.target.value,null,null,null,null,id)
                     // console.log(e.target.value)
                 }}
-                required
                 ></input>
             </td>
             <td>
@@ -38,7 +26,6 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
                     changeEach(null,e.target.value,null,null,null,id)
                     // console.log(e.target.value)
                 }}
-                required
                 ></input>
             </td>
             <td>
@@ -49,7 +36,6 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
                     changeEach(null,null,e.target.value,null,null,id)
                     // console.log(e.target.value)
                 }}
-                required
                 ></input>
             </td>
             <td >
@@ -57,10 +43,12 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
                 className='rounded text-center w-full'
                 value={mid}
                 onChange={(e)=>{
-                    changeEach(null,null,null,e.target.value,null,id)
+                    if(!isNaN(Number(e.target.value))){
+                        changeEach(null,null,null,Number(e.target.value),null,id)
+                    }
+                    // changeEach(null,null,null,Number(e.target.value),null,id)
                     // console.log(e.target.value)
                 }}
-                required
                 ></input>
             </td>
             <td>
@@ -68,10 +56,11 @@ const Student = ({id,nisitId,firstname,lastname,mid,final,changeEach}) => {
                 className='rounded text-center w-full'
                 value={final}
                 onChange={(e)=>{
-                    changeEach(null,null,null,null,e.target.value,id)
+                    if(!isNaN(Number(e.target.value))){
+                        changeEach(null,null,null,null,Number(e.target.value),id)
+                    }
                     // console.log(e.target.value)
                 }}
-                required
                 ></input>
             </td>
 

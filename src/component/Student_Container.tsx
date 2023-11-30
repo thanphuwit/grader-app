@@ -88,18 +88,26 @@ const Student_Container = ({student,changeEachRecord}) => {
     // })
 
     const [currentPage, setCurrentPage] = useState(1);
+
+    let totalPage = Math.ceil(student.length/10)
+
     const handlePage = (newPage) => {
         setCurrentPage(newPage)
     }
+    const handleTotalPage = (newPage) => {
+        totalPage = newPage
+    }
 
+    // console.log('totalPage: '+totalPage)
+    // console.log('currentPage: '+currentPage)
     // const [studentPerPage] = useState(10);
 
     // const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div className='bg-gray-500 p-3'>
-            <AddStudentButton changeEach={changeEach} />
-            <Pagination student={student} currentPage={currentPage} handlePage={handlePage}/>
+            <AddStudentButton changeEach={changeEach} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage} />
+            <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
             <div className='flex justify-center items-center w-screen py-5'>
                 <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-3/4'>
                     <tbody>
@@ -125,7 +133,7 @@ const Student_Container = ({student,changeEachRecord}) => {
 
 }
 
-const AddStudentButton = ({changeEach}) => {
+const AddStudentButton = ({changeEach,currentPage,totalPage,handlePage}) => {
     return (
             <button className='border-2 bg-red-500'
                 onClick={()=>{

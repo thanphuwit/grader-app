@@ -10,8 +10,8 @@ const DATA_INIT = [
     nisitId:'',
     firstname:'',
     lastname:'',
-    mid:0,
-    final:0,
+    mid:'',
+    final:'',
     },
   ]
 
@@ -20,8 +20,24 @@ const Grade = () => {
     const data = useSelector((state) => state.data)
     // console.log(data)
     // data = {courseId: '1', courseName: '2', student: Array(0)}
+    // const fromEdit = () => {
+    //     if(data.student.length==1){
+    //         return DATA_INIT
+    //     }else{
+    //         return data.student
+    //     }
+    // }
+    const fromWhere = () => {
+        if(data.student.length>1){
+            let obj = data.student
+            return obj
+        }
+        else{
+            return DATA_INIT
+        }
+    }
 
-    const [student,setStudent] = useState(DATA_INIT)
+    const [student,setStudent] = useState(fromWhere)
 
     const changeEachRecord = (nisitId,firstname,lastname,mid,final,id) => {
 
@@ -34,7 +50,7 @@ const Grade = () => {
             // set total student per page at below 
             const pageNumber = Math.floor((lastId-1)/10)+1
             setStudent(student => {
-                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'', mid:0, final:0}]
+                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'', mid:'', final:''}]
             })
         }
         //change nisitId
@@ -42,7 +58,7 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    element.nisitId = nisitId
+                    (element as any).nisitId = nisitId
                     return element
                 }
             })
@@ -54,8 +70,9 @@ const Grade = () => {
             // console.log(student)
             let newStudent = [...student]
             newStudent.find((element)=>{
+                console.log(element)
                 if(element.id==id){
-                    element.firstname = firstname
+                    (element.firstname as any) = firstname
                     return element
                 }
             })
@@ -69,7 +86,7 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    element.lastname = lastname
+                    (element.lastname as any) = lastname
                     return element
                 }
             })
@@ -81,7 +98,7 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    element.mid = mid
+                    (element.mid as any) = mid
                     return element
                 }
             })
@@ -92,7 +109,7 @@ const Grade = () => {
             let newStudent = [...student]
             newStudent.find((element)=>{
                 if(element.id==id){
-                    element.final = final
+                    (element.final as number) = final
                     return element
                 }
             })

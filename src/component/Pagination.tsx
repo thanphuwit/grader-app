@@ -1,9 +1,8 @@
 import React from 'react';
 
-const Pagination = ({student,currentPage,handlePage}) => {
+const Pagination = ({student,currentPage,totalPage,handlePage}) => {
 
   let components = []
-  let totalPage = Math.ceil(student.length/10)
   // console.log(totalPage)
   Array(totalPage).fill().map((item,index)=>{
     components.push(
