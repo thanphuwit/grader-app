@@ -1,3 +1,4 @@
+import { useState } from 'react'
 const Result = ({id,nisitId,firstname,lastname,work,mid,final,grade}) => {
 
     const calGrade = (mid,final) => {
@@ -34,6 +35,15 @@ const Result = ({id,nisitId,firstname,lastname,work,mid,final,grade}) => {
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
                     <h1>{nisitId}</h1>
+                    {/* <input placeholder='รหัสนิสิต'
+                    className='rounded text-center w-full'
+                    value={test}
+                    onChange={(e)=>{
+                        setTest(e.target.value)
+                        console.log(e.target.value)
+                    }}
+                    required
+                    ></input> */}
                 </td>
                 <td className='text-center rounded-md border-2 bg-white'>
                     <h1>{firstname}</h1>

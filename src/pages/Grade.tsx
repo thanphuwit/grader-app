@@ -1,8 +1,15 @@
 import { Link, Outlet } from "react-router-dom";
 import { useEffect, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import Header from '../component/Header'
+import BackButton from '../component/BackButton'
+import AddButton from '../component/AddButton'
+import Pagination from "../component/Pagination";
+import CourseTitle from "../component/CourseTitle";
+import ResetButton from "../component/ResetButton";
+import Table from '../component/Table'
+import NextPageButton from "../component/NextPageButton";
 
-import Student_Container from "../component/Student_Container";
 
 const DATA_INIT: {
     id:number,
@@ -24,13 +31,16 @@ const DATA_INIT: {
     work:0,
     mid:0,
     final:0,
-    grade:'',
+    grade:'F',
     },
   ]
 
 const Grade = () => {
+    document.title = 'กรอกคะแนน'
 
-    const data: {courseId:string,coruseName:string,
+    
+    
+    const data: {courseId:string,courseName:string,
         student:{id:number,page:number,nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,grade:string}[]
     } = useSelector((state) => state.data)
     // console.log(data)
@@ -42,6 +52,27 @@ const Grade = () => {
     //         return data.student
     //     }
     // }
+    
+    const courseId = data.courseId
+    const courseName = data.courseName
+    // console.log(courseId)
+    // console.log(courseName)
+
+    const fromResult = () => {
+        if(data.student.length>1){
+            let obj = data.student
+            let obj2 = [...obj]
+            // console.log('fromResult')
+            return obj2
+        }
+        else{
+            // console.log('fromNormal')
+            return DATA_INIT
+        }
+    }
+
+    const [student,setStudent] = useState(fromResult)
+    // console.log(typeof(student))
 
     const calGrade = (work,mid,final) => {
         let total = work+mid+final
@@ -70,17 +101,6 @@ const Grade = () => {
         }
     }
 
-    const fromWhere = () => {
-        if(data.student.length>1){
-            let obj = [...data.student]
-            return obj
-        }
-        else{
-            return DATA_INIT
-        }
-    }
-
-    const [student,setStudent] = useState(fromWhere)
 
     const changeEachRecord = (nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,id:number) => {
 
@@ -93,18 +113,32 @@ const Grade = () => {
             // set total student per page at below 
             const pageNumber = Math.floor((lastId-1)/10)+1
             setStudent(student => {
-                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'',work:0, mid:0, final:0, grade:''}]
+                return [...student,{id:lastId, page:pageNumber, nisitId:'', firstname:'',lastname:'',work:0, mid:0, final:0, grade:'F'}]
             })
         }
         //change nisitId
         else if(nisitId!=null){
-            let newStudent = [...student]
-            newStudent.find((element)=>{
-                if(element.id==id){
-                    element.nisitId = nisitId
-                    return element
+            // newStudent.find((element)=>{
+            //     if(element.id==id){
+            //         // let test1 = nisitId
+            //         element.nisitId = nisitId
+            //         // console.log(element)
+            //         // let test = {id:element.id,page:element.page,nisitId:nisitId,firstname:element.firstname,lastname:element.lastname,work:element.work,mid:element.mid,final:element.final,grade:element.grade}
+            //         // console.log(test)
+            //         return element
+            //     }
+            // })
+            let newStudent = []
+            student.find((element)=>{
+                if(element.id!=id){
+                    newStudent.push(element)
+                }
+                else{
+                    newStudent.push({id:element.id,page:element.page,nisitId:nisitId,firstname:element.firstname,lastname:element.lastname,work:element.work,mid:element.mid,final:element.final,grade:element.grade})
                 }
             })
+            // console.log(obj1)
+            // console.log(newStudent)
             setStudent(newStudent)
         }
         //change name
@@ -141,7 +175,7 @@ const Grade = () => {
         else if(work!=null){
             let newStudent = [...student]
             newStudent.find((element)=>{
-                console.log(element)
+                // console.log(element)
                 if(element.id==id){
                     element.work = work
                     element.grade = calGrade(work, element.mid, element.final)
@@ -176,10 +210,50 @@ const Grade = () => {
         }
     }
 
+    const handleStudent = () => {
+        setStudent([
+            {id:1,
+            page:1,
+            nisitId:'',
+            firstname:'',
+            lastname:'',
+            work:0,
+            mid:0,
+            final:0,
+            grade:'F',
+            },
+          ])
+    }
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    let totalPage = Math.ceil(student.length/10)
+
+    const handlePage = (newPage) => {
+        setCurrentPage(newPage)
+    }
+
     return (
-        <div>
-            <div>
-                <Student_Container student={student} changeEachRecord={changeEachRecord}/>
+        <div className=" min-h-screen bg-blue-100 flex flex-col">
+            <div className='flex justify-between mt-5 py-2 '>
+                <Header text={'กรอกคะแนน'}/>
+                <BackButton destination={'/Course'}/>
+            </div>
+            <div className='flex justify-center p-5 '>
+                <AddButton changeEach={changeEachRecord} currentPage={currentPage} totalPage={totalPage} totalStudent={student.length} handlePage={handlePage}/>
+            </div>
+            <div className=' w-full h-10 flex justify-center '>
+                <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
+            </div>
+            <div className='flex justify-between py-1 '>
+                <CourseTitle courseId={courseId} courseName={courseName}/>
+                <ResetButton handleStudent={handleStudent} handlePage={handlePage}/>
+            </div>
+            <div className='flex justify-center items-center w-screen py-5 '>
+                <Table show={'input'} student={student} changeEach={changeEachRecord} currentPage={currentPage}/>
+            </div>
+            <div className='flex justify-center items-center '>
+                <NextPageButton destination={'/Result'} student={student} courseId={courseId} courseName={courseName} text={'ถัดไป'}/>
             </div>
         </div>
     )

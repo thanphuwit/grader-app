@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar/>
           <Routes>
               <Route path="/" element={<Course/>}/>
               <Route path="/Course" element={<Course/>}/>

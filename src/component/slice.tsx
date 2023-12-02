@@ -23,6 +23,7 @@ export const Slice = createSlice({
     addStudent: (state, action:{payload:{id:number,page:number,nisitId:string,firstname:string,lastname:string,work:number,mid:number,final:number,grade:string}[],type:string}) => {
       // console.log(action.payload)
       state.student = action.payload
+      // return action.payload
       // console.log(state.student)
     }
   },

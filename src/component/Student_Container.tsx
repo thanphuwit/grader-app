@@ -1,14 +1,18 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigation } from 'react-router-dom'
 import { useRef,useState,useEffect, forwardRef } from 'react'
 import { addStudent } from "./Slice";
 import { useSelector, useDispatch } from 'react-redux'
 import Student from './Student';
 import Pagination from './Pagination';
-import Page from './StudentPage';
-import { current } from '@reduxjs/toolkit';
-import StudentPage from './StudentPage';
+import Page from './StudentList';
+import { useNavigate } from 'react-router-dom';
+import StudentList from './StudentList';
+import Header from './Header'
 
-const Student_Container = ({student,changeEachRecord}) => {
+const Student_Container = ({student,courseId,courseName,changeEachRecord,handleStudent}) => {
+    const navigate = useNavigate()
+    // console.log(courseId)
+    // console.log(courseName)
     // console.log(student)
     // student = [
     //     {
@@ -105,56 +109,123 @@ const Student_Container = ({student,changeEachRecord}) => {
     // const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
-        <div className='bg-gray-500 p-3'>
-            <AddStudentButton changeEach={changeEach} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage} />
-            <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
-            <div className='flex justify-center items-center w-screen py-5'>
-                <table className='bg-red-500 rounded-xl border-separate border-spacing-2 border border-slate-500 w-5/6'>
-                    <tbody>
-                        <Title/>
-                        <StudentPage student={student} changeEach={changeEach} currentPage={currentPage}/>
-                    </tbody>
-                </table>
+            <div className='bg-blue-100 h-screen'>
+                <Headerr/>
+                <AddStudentButton changeEach={changeEach} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage} totalStudent={student.length}/>
+                <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
+                <Title courseId={courseId} courseName={courseName} handleStudent={handleStudent} handlePage={handlePage}/>
+                <div className='flex justify-center items-center w-screen py-5 '>
+                    <table className='rounded-lg border-separate border-spacing-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-5/6 drop-shadow-2xl'>
+                        <tbody className=''>
+                            <TableHead/>
+                            <StudentList student={student} changeEach={changeEach} currentPage={currentPage}/>
+                        </tbody>
+                    </table>
+                </div>
+                {/* <button onClick={()=>{
+                    setCurrentPage(2)
+                    // console.log('currentPage: '+currentPage)
+                    // console.log('indexOfLastPost: '+indexOfLastPost)
+                    // console.log('indexOfFirstPost: '+indexOfFirstPost)
+                    // console.log('currentPosts: '+currentPosts)
+                    
+                }}>
+                    xxxx
+                </button> */}
+                <GoResultPageButton student={student} courseId={courseId}  courseName={courseName}/>
+                {/* <button onClick={()=>{
+                    console.log(student)
+                }}>
+                    xxxxx
+                </button> */}
+                <Outlet/>
             </div>
-            {/* <button onClick={()=>{
-                setCurrentPage(2)
-                // console.log('currentPage: '+currentPage)
-                // console.log('indexOfLastPost: '+indexOfLastPost)
-                // console.log('indexOfFirstPost: '+indexOfFirstPost)
-                // console.log('currentPosts: '+currentPosts)
-                
-            }}>
-                xxxx
-            </button> */}
-            <GoResultPageButton student={student} />
-            <Outlet/>
-        </div>
+
     )
 
 }
 
-const AddStudentButton = ({changeEach,currentPage,totalPage,handlePage}) => {
+const Headerr = () => {
+    const navigate = useNavigate()
     return (
-            <button className='border-2 bg-red-500'
+        <div className='flex justify-between mt-5 p-1 mx-40 bg-red-500'>
+            <div className='p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 drop-shadow-xl'>
+                <h1 className='text-white font-bold'>โปรแกรมตัดเกรด / กรอกคะแนน</h1>
+            </div>
+            <button className='p-3 rounded-lg bg-gradient-to-r from-red-500 to-orange-500 drop-shadow-xl'
                 onClick={()=>{
-                    changeEach(null,null,null,null,null,null)
+                    navigate('/Course')
                 }}
             >
-                เพิ่ม
+                <h1 className='text-white font-bold'>ย้อนกลับ / แก้ไข</h1>
             </button>
+        </div>
     )
 }
 
-const Title = () => {
+const Title = ({courseId,courseName,handleStudent,handlePage}) => {
     return (
-            <tr className=''>
-                <td className='border-2 rounded-md text-center w-1/12'>ลำดับ</td>
-                <td className='border-2 rounded-md text-center w-1/6'>รหัสนิสิต</td>
-                <td className='border-2 rounded-md text-center w-1/6'>ชื่อ</td>
-                <td className='border-2 rounded-md text-center w-1/6'>นามสกุล</td>
-                <td className='border-2 rounded-md text-center w-1/12'>คะแนนเก็บ</td>
-                <td className='border-2 rounded-md text-center w-1/12'>คะแนนกลางภาค</td>
-                <td className='border-2 rounded-md text-center w-1/12'>คะแนนปลายภาค</td>
+        <div className='flex justify-between mt-5 p-1 mx-40 '>
+            <div className='flex p'>
+                <div className=' p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:drop-shadow-xl'>
+                    <h1 className='text-white font-bold'>รหัสวิชา: {courseId}</h1>
+                </div>
+                <div className='ml-3 p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 drop-shadow-xl'>
+                    <h1 className='text-white font-bold'>ชื่อวิชา: {courseName}</h1>
+                </div>
+            </div>
+            <div>
+                <button className=' p-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600 drop-shadow-xl'
+                    onClick={()=>{
+                        handleStudent()
+                        handlePage(1)
+                    }}
+                >
+                    <h1 className='text-white font-bold'>ล้างค่า</h1>
+                </button>
+            </div>
+        </div>
+    )
+}
+
+const AddStudentButton = ({changeEach,currentPage,totalPage,handlePage,totalStudent}) => {
+    return (
+            <div className='flex justify-center p-5'>
+                <button className='border-2 px-12 py-1.5 drop-shadow-lg bg-gradient-to-r from-indigo-500 to-purple-500 font-bold text-white rounded-lg hover:text-yellow-400 mx-5'
+                    onClick={()=>{
+                        if((totalStudent%10)!=0){
+                            changeEach(null,null,null,null,null,null)
+                        }else{
+                            changeEach(null,null,null,null,null,null)
+                            handlePage(totalPage+1)
+                        }
+                    }}
+                >
+                    + 1 จำนวนนักเรียน
+                </button>
+                {/* <button className='border-2 px-12 py-1.5 drop-shadow-lg bg-gradient-to-r from-indigo-500 to-purple-500 font-bold text-white rounded-lg hover:text-orange-500 mx-5'
+                    onClick={()=>{
+                        useEffect(()=>{
+                            changeEach(null,null,null,null,null,null)
+                        })
+                    }}
+                >
+                    + 10 จำนวนนักเรียน
+                </button> */}
+            </div>
+    )
+}
+
+const TableHead = () => {
+    return (
+            <tr className=' border-bottom-2'>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/12'>ลำดับ</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/6'>รหัสนิสิต</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/6'>ชื่อ</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/6'>นามสกุล</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/12'>คะแนนเก็บ</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/12'>คะแนนกลางภาค</td>
+                <td className='border-2 text-white font-bold rounded-md text-center w-1/12'>คะแนนปลายภาค</td>
             </tr>
         // <div className='flex bg-blue-500 justify-center items-center py-1'>
         //     <div className="w-1/5 flex items-center justify-center">
@@ -179,16 +250,32 @@ const Title = () => {
     )
 }
 
-const GoResultPageButton = ({student}) => {
+const GoResultPageButton = ({student,courseId,courseName}) => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    let page = '/Grade'
     return (
-        <div className='bg-blue-500'>
-            <Link to='/Result'
+        <div className='flex justify-center items-center'>
+            <button
+                className='p-3 bg-green-500 rounded-md font-bold text-white drop-shadow-lg hover:bg-green-600'
                 onClick={()=>{
                     // console.log(student)
-                    dispatch(addStudent(student))
+                    // dispatch(addStudent(student))
+                    let found = false
+                    student.map((item)=>{
+                        if(item.nisitId=='' || item.firstname=='' || item.lastname==''){
+                            found = true
+                        }
+                    })
+                    if(!found){
+                        dispatch(addStudent(student))
+                        navigate('/Result')
+                    }
+                    // let test = {courseId:courseId,courseName:courseName,student:[student]}
+                    // dispatch(addStudent(test))
+                    // navigate('/Result')
                 }}
-            >หน้าถัดไป</Link>
+            >หน้าถัดไป</button>
         </div>
         // <Link className='border-2 bg-red-500'
         //         onClick={()=>{

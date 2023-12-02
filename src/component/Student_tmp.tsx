@@ -3,10 +3,12 @@ import { useRef,useState,useEffect } from 'react'
 import Result from '../pages/Result'
 
 const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
+
+
     return (
         <tr className=''>
             <td className='flex justify-center'>
-                <h1>{id}</h1>
+                <h1 className='text-white'>{id}</h1>
             </td>
             <td className=''>
                 <input placeholder='รหัสนิสิต'
@@ -16,6 +18,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     changeEach(e.target.value,null,null,null,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required
                 ></input>
             </td>
             <td>
@@ -26,6 +29,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     changeEach(null,e.target.value,null,null,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required={true}
                 ></input>
             </td>
             <td>
@@ -36,6 +40,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     changeEach(null,null,e.target.value,null,null,null,id)
                     // console.log(e.target.value)
                 }}
+                required={true}
                 ></input>
             </td>
             <td >
@@ -49,6 +54,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     // changeEach(null,null,null,Number(e.target.value),null,id)
                     // console.log(e.target.value)
                 }}
+                required={true}
                 ></input>
             </td>
             <td >
@@ -62,6 +68,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     // changeEach(null,null,null,Number(e.target.value),null,id)
                     // console.log(e.target.value)
                 }}
+                required={true}
                 ></input>
             </td>
             <td>
@@ -74,6 +81,7 @@ const Student = ({id,nisitId,firstname,lastname,work,mid,final,changeEach}) => {
                     }
                     // console.log(e.target.value)
                 }}
+                required={true}
                 ></input>
             </td>
 
