@@ -3,7 +3,20 @@ import { useNavigate } from "react-router-dom"
 
 import { addCourse, addStudent } from "./Slice"
 
-const NextPageButton = ({ destination, student, courseId, courseName, text }) => {
+interface Student {
+    id: number,
+    page: number,
+    nisitId: string,
+    firstname: string,
+    lastname: string,
+    work: number,
+    mid: number,
+    final: number,
+    grade: string,
+  }
+
+const NextPageButton = ({ text, destination, student, courseId, courseName }:
+    {text:string, destination:string, student?:any, courseId?:any, courseName?:any}) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()

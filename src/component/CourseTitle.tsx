@@ -1,4 +1,4 @@
-const CourseTitle = ({courseId,courseName}) => {
+const CourseTitle = ({courseId,courseName}:{courseId:string, courseName:string}) => {
     return (
         <div className='flex ml-40'>
             <div className=' p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 hover:drop-shadow-xl'>

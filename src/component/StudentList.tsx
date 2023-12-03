@@ -1,6 +1,19 @@
-const StudentList = ({ show, student, changeEach, currentPage }) => {
+interface Student {
+  id: number,
+  page: number,
+  nisitId: string,
+  firstname: string,
+  lastname: string,
+  work: number,
+  mid: number,
+  final: number,
+  grade: string,
+}
 
-  let components = []
+const StudentList = ({ show, student, changeEach, currentPage }:
+  {show:string, student:Student[], changeEach?:any, currentPage:number}) => {
+
+  let components: React.ReactNode[] = []
 
   if (show == 'input') {
     student.map((item) => {
@@ -25,7 +38,7 @@ const StudentList = ({ show, student, changeEach, currentPage }) => {
 
 export default StudentList
 
-const Student = ({ student, changeEach }) => {
+const Student = ({ student, changeEach }:{student:Student, changeEach:(record:string, value:any, id:number)=>void}) => {
   return (
     <tr className=''>
       <td className='flex justify-center'>
@@ -36,7 +49,7 @@ const Student = ({ student, changeEach }) => {
           className='rounded text-center w-full'
           value={student.nisitId}
           onChange={(e) => {
-            changeEach(e.target.value, null, null, null, null, null, student.id)
+            changeEach('nisitId', e.target.value, student.id)
             // console.log(e.target.value)
           }}
           required
@@ -47,7 +60,7 @@ const Student = ({ student, changeEach }) => {
           className='rounded text-center w-full'
           value={student.firstname}
           onChange={(e) => {
-            changeEach(null, e.target.value, null, null, null, null, student.id)
+            changeEach('firstname', e.target.value, student.id)
             // console.log(e.target.value)
           }}
           required={true}
@@ -58,7 +71,7 @@ const Student = ({ student, changeEach }) => {
           className='rounded text-center w-full'
           value={student.lastname}
           onChange={(e) => {
-            changeEach(null, null, e.target.value, null, null, null, student.id)
+            changeEach('lastname', e.target.value, student.id)
             // console.log(e.target.value)
           }}
           required={true}
@@ -70,7 +83,7 @@ const Student = ({ student, changeEach }) => {
           value={student.work}
           onChange={(e) => {
             if (!isNaN(Number(e.target.value))) {
-              changeEach(null, null, null, Number(e.target.value), null, null, student.id)
+              changeEach('work', Number(e.target.value), student.id)
             }
             // changeEach(null,null,null,Number(e.target.value),null,id)
             // console.log(e.target.value)
@@ -84,7 +97,7 @@ const Student = ({ student, changeEach }) => {
           value={student.mid}
           onChange={(e) => {
             if (!isNaN(Number(e.target.value))) {
-              changeEach(null, null, null, null, Number(e.target.value), null, student.id)
+              changeEach('mid', Number(e.target.value), student.id)
             }
             // changeEach(null,null,null,Number(e.target.value),null,id)
             // console.log(e.target.value)
@@ -98,7 +111,7 @@ const Student = ({ student, changeEach }) => {
           value={student.final}
           onChange={(e) => {
             if (!isNaN(Number(e.target.value))) {
-              changeEach(null, null, null, null, null, Number(e.target.value), student.id)
+              changeEach('final', Number(e.target.value), student.id)
             }
             // console.log(e.target.value)
           }}
@@ -106,15 +119,19 @@ const Student = ({ student, changeEach }) => {
         ></input>
       </td>
       <td className="flex justify-center bg-red-500 rounded">
-        <button className="w-full rounded hover:bg-red-600">
-        🗑️
+        <button className="w-full rounded hover:bg-red-600"
+          onClick={() => {
+            changeEach('Del', 'NO VALUE', student.id)
+          }}
+        >
+          🗑️
         </button>
       </td>
     </tr>
   )
 }
 
-const Result = ({ student }) => {
+const Result = ({ student }:{student:Student}) => {
   return (
     <tr className="">
       <td className='text-center rounded-lg '>

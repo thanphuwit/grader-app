@@ -1,4 +1,4 @@
-const ResetButton = ({handleStudent, handlePage }) => {
+const ResetButton = ({handleStudent, handlePage}:{handleStudent:()=>void, handlePage:(newPage:number)=>void}) => {
     return (
         <div className="mr-40">
             <button className=' p-3 rounded-lg bg-gradient-to-r from-red-500 to-red-600 drop-shadow-xl'

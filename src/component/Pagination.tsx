@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Pagination = ({ student, currentPage, totalPage, handlePage }) => {
+const Pagination = ({currentPage, totalPage, handlePage }:
+  {currentPage:number, totalPage:number, handlePage:(newPage:number)=>void}) => {
 
-  let components = []
+  let components: React.ReactNode[] = []
   // console.log(totalPage)
-  Array(totalPage).fill().map((item, index) => {
+  Array(totalPage).fill(undefined).map((item, index) => {
     components.push(
       <NumberPageButton key={index + 1} pageNumber={index + 1} currentPage={currentPage} handlePage={handlePage} />
     )
@@ -36,7 +37,7 @@ const Pagination = ({ student, currentPage, totalPage, handlePage }) => {
   );
 }
 
-const NumberPageButton = ({ pageNumber, currentPage, handlePage }) => {
+const NumberPageButton = ({ pageNumber, currentPage, handlePage }:{pageNumber:number, currentPage:number, handlePage:(newPage:number)=>void}) => {
   let style = ''
   if (currentPage == pageNumber) {
     style = 'flex justify-center items-center border-2 px-4 mx-1 rounded-lg font-bold text-white bg-purple-500'

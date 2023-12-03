@@ -1,7 +1,19 @@
 import StudentList from "./StudentList"
-const Table = ({ show, student, changeEach, currentPage }) => {
 
-    let components = []
+interface Student {
+    id: number,
+    page: number,
+    nisitId: string,
+    firstname: string,
+    lastname: string,
+    work: number,
+    mid: number,
+    final: number,
+    grade: string,
+}
+
+const Table = ({ show, student, changeEach, currentPage }:
+    {show:string, student:Student[], changeEach?:(record:string,value:any,id:number)=>void, currentPage:number}) => {
 
     if (show == 'input') {
         return (

@@ -1,12 +1,12 @@
 import { Link,Outlet } from 'react-router-dom'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { addCourse } from './Slice'
 import { forwardRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import NextPageButton from './NextPageButton'
 
-const Course_Container = ({CourseHandle}) => {
+const Course_Container:FC = () => {
     const NameRef = useRef<HTMLInputElement>(null)
     const IdRef = useRef<HTMLInputElement>(null)
     return (
@@ -18,7 +18,7 @@ const Course_Container = ({CourseHandle}) => {
                 <CourseIdCon ref={IdRef}/>
                 <CourseNameCon ref={NameRef}/>
                 {/* <SubmitButton CourseHandle={CourseHandle} id={IdRef} name={NameRef}/> */}
-                <NextPageButton destination={'/Grade'} courseId={IdRef} courseName={NameRef}/>
+                <NextPageButton text={'ถัดไป'} destination={'/Grade'} courseId={IdRef} courseName={NameRef}/>
             </div>
             {/* <div>
                 <h1>รหัสวิชา</h1>
@@ -58,30 +58,30 @@ const CourseNameCon = forwardRef((props,ref) => {
 })
 
 
-const SubmitButton = ({handleCourse,id,name}) => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    return (
-        <div className='flex justify-center'>
-            <button className="flex py-2 border-2 bg-orange-400 w-24 justify-center rounded-lg font-bold text-white hover:bg-orange-600"
-                onClick={()=>{
-                    if(id.current.value!='' && name.current.value!=''){
-                        handleCourse(id,name)
-                        dispatch(addCourse({courseId:id.current.value,courseName:name.current.value}))
-                        navigate('/Grade')
-                    }
-                }}
-            >
-                {/* <button onClick={()=>{
-                    console.log("id: "+id.current.value)
-                    console.log("name: "+name.current.value)}}>
-                    focus
-                </button> */}
-                ถัดไป
-            </button>
-        </div>
+// const SubmitButton = ({handleCourse,id,name}) => {
+//     const dispatch = useDispatch()
+//     const navigate = useNavigate()
+//     return (
+//         <div className='flex justify-center'>
+//             <button className="flex py-2 border-2 bg-orange-400 w-24 justify-center rounded-lg font-bold text-white hover:bg-orange-600"
+//                 onClick={()=>{
+//                     if(id.current.value!='' && name.current.value!=''){
+//                         handleCourse(id,name)
+//                         dispatch(addCourse({courseId:id.current.value,courseName:name.current.value}))
+//                         navigate('/Grade')
+//                     }
+//                 }}
+//             >
+//                 {/* <button onClick={()=>{
+//                     console.log("id: "+id.current.value)
+//                     console.log("name: "+name.current.value)}}>
+//                     focus
+//                 </button> */}
+//                 ถัดไป
+//             </button>
+//         </div>
         
-    )
-}
+//     )
+// }
 
 export default Course_Container

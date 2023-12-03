@@ -11,6 +11,19 @@ import Table from '../component/Table'
 import NextPageButton from "../component/NextPageButton";
 
 import Result_Container from "../component/Result._Container";
+import Gpa from "../component/Gpa";
+
+interface Student {
+    id: number,
+    page: number,
+    nisitId: string,
+    firstname: string,
+    lastname: string,
+    work: number,
+    mid: number,
+    final: number,
+    grade: string,
+}
 
 const Result = () => {
     document.title = 'สรุปผล'
@@ -58,9 +71,36 @@ const Result = () => {
 
     let totalPage = Math.ceil(student.length/10)
 
-    const handlePage = (newPage) => {
+    const handlePage = (newPage:number) => {
         setCurrentPage(newPage)
     }
+
+    let gpa:number = 0
+    let totalStudent = student.length
+
+    const getNumOfGrade = (grade:string) => {
+        if(grade=='A'){
+            return 4
+        }else if(grade=='B+'){
+            return 3.5
+        }else if(grade=='B'){
+            return 3
+        }else if(grade=='C+'){
+            return 2.5
+        }else if(grade=='C'){
+            return 2
+        }else if(grade=='D+'){
+            return 1.5
+        }else if(grade=='D'){
+            return 1
+        }else if(grade=='F'){
+            return 0
+        }
+    }
+
+    student.map((item:Student)=>{
+        gpa = getNumOfGrade(item.grade) + gpa
+    })
 
     return (
         <div className=" min-h-screen bg-blue-100 flex flex-col">
@@ -69,7 +109,7 @@ const Result = () => {
                 <BackButton destination={'/Grade'}/>
             </div>
             <div className=' w-full h-10 flex justify-center '>
-                <Pagination student={student} currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
+                <Pagination currentPage={currentPage} totalPage={totalPage} handlePage={handlePage}/>
             </div>
             <div className='flex justify-between py-1 '>
                 <CourseTitle courseId={courseId} courseName={courseName}/>
@@ -77,8 +117,11 @@ const Result = () => {
             <div className='flex justify-center items-center w-screen py-5 '>
                 <Table show={'result'} student={student} currentPage={currentPage}/>
             </div>
-            <div className='flex justify-center items-center '>
-                <NextPageButton destination={'/Course'} text={'เสร็จสิ้น'} />
+            <div className='justify-center flex flex-row'>
+                <Gpa gpa={gpa} totalStudent={totalStudent}/>
+            </div>
+            <div className='flex justify-center items-center mt-5'>
+                <NextPageButton text={'เสร็จสิ้น'} destination={'/Course'} />
             </div>
             {/* <Result_Container student={student} courseId={courseId} courseName={courseName}/> */}
         </div>
